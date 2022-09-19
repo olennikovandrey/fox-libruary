@@ -1,0 +1,111 @@
+.auth-wrapper
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100vh
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: rgba(181, 181, 181, 0.8)
+  &-enter
+    opacity: 0
+    transform: scale(0.9)
+  &-enter-active
+    opacity: 1
+    transform: translateX(0)
+    transition: opacity 300ms, transform 300ms
+  &-exit
+    opacity: 1
+  &-exit-active
+    opacity: 0
+    transform: scale(0.9)
+    transition: opacity 300ms, transform 300ms
+
+.auth
+  position: relative
+  width: 32%
+  height: auto
+  padding: 40px 30px 30px
+  border-radius: 8px
+  background-color: #fff
+  &__close
+    content: url("../../assets/images/auth/close.svg")
+    position: absolute
+    top: 20px
+    right: 20px
+    cursor: pointer
+    &:hover
+      transform: rotate(90deg)
+      content: url("../../assets/images/auth/close_hover.svg")
+
+  &__title
+    margin-bottom: 25px
+    color: #000
+    font-weight: 700
+    font-size: 24px
+    line-height: 32px
+
+  &__label
+    display: inline-block
+    position: relative
+    width: 100%
+    margin-bottom: 16px
+    font-size: 16px
+    line-height: 22px
+
+  &__input
+    width: 100%
+    height: 45px
+    margin-top: 4px
+    padding-left: 15px
+    border: 1px solid #b5b5b5
+    border-radius: 8px
+    font-size: 18px
+    line-height: 25px
+    color: #000
+    transition: .2s
+    &:hover,
+    &:active
+      border: 2px solid #fd2d1b
+
+  &__clear-value
+    content: url("../../assets/images/auth/close.svg")
+    position: absolute
+    top: 39px
+    right: 10px
+    cursor: pointer
+    transition: .2s
+    &:hover
+      transform: rotate(90deg)
+      content: url("../../assets/images/auth/close_hover.svg")
+
+  &__button
+    width: 100%
+    height: 50px
+    margin-top: 10px
+    border: none
+    border-radius: 8px
+    color: #fff
+    line-height: 28px
+    font-size: 20px
+    font-weight: 600
+    background-color: #ff5d4f
+    cursor: pointer
+    transition: .2s
+    &:hover
+      background-color: #fd2d1b
+
+input[type="date"]
+  position: relative
+  content: ""
+  &::-webkit-calendar-picker-indicator
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    width: auto
+    height: auto
+    color: transparent
+    background: transparent
