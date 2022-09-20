@@ -1,7 +1,7 @@
 import topImg from "../../assets/images/top-section/topImg.svg";
 import React from "react";
 
-export default function TopSection() {
+const TopSection: React.FC = () => {
   return (
     <section className="top-section">
       <div className="content">
@@ -14,4 +14,6 @@ export default function TopSection() {
       <img className="top-section__image" src={topImg} alt="top-img" />
     </section>
   );
-}
+};
+
+export default TopSection;

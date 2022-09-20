@@ -1,13 +1,13 @@
 import Input from "./Input";
 import React, { useEffect, useState } from "react";
 
-type IProps = {
+interface IProps {
   setShowAuth: (value: boolean) => void;
-  data: string;
+  data?: string;
   title: string;
   variant: string;
   dismissible: boolean;
-};
+}
 
 const Auth: React.FC<IProps> = (props) => {
   const [username, setUserName] = useState("");

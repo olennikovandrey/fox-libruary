@@ -6,7 +6,7 @@ import Footer from "../Footer/Footer";
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
-const Main = () => {
+const Main: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [isLogInShown, setIsLogInShown] = useState(false);
   const [isSignUpShown, setIsSignUpShown] = useState(false);
@@ -30,7 +30,6 @@ const Main = () => {
       >
         <Auth
           setShowAuth={setIsLogInShown}
-          data="Log In"
           variant="primary"
           dismissible
           title="Log In to Fox Library"

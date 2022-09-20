@@ -28,8 +28,23 @@
     font-size: 18px
     line-height: 25px
 
-
-
-
   &__connect
     width: 15%
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+
+.networks
+  display: flex
+  justify-content: flex-start
+  &__icon
+    width: 30px
+    height: 30px
+    margin-right: 15px
+    cursor: pointer
+    &:first-child
+      content: url("../../assets/images/footer/instagram.svg")
+    &:last-child
+      content: url("../../assets/images/footer/facebook.svg")
+    &:hover
+      transform: scale(1.1)

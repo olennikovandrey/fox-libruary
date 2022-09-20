@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer__items">
@@ -23,7 +23,13 @@ export default function Footer() {
       </div>
       <div className="footer__connect">
         <li className="footer__title">Stay connected</li>
+        <div className="networks">
+          <li className="networks__icon"></li>
+          <li className="networks__icon"></li>
+        </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

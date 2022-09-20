@@ -1,11 +1,11 @@
 import React, { ChangeEvent } from "react";
 
-type IProps = {
+interface IProps {
   value: string;
   label: string;
   inputType: string;
   stateFn: (value: string) => void;
-};
+}
 
 const Input: React.FC<IProps> = (props) => {
   const { label, value, inputType, stateFn } = props;

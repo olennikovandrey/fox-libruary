@@ -1,12 +1,12 @@
 import logo from "../../assets/images/header/Fox_Library.svg";
 import React from "react";
 
-type IProps = {
+interface IProps {
   setSearchValue: (value: string) => void;
   showSignUp: (value: boolean) => void;
   showLogIn: (value: boolean) => void;
   searchValue: string;
-};
+}
 
 const Header: React.FC<IProps> = (props) => {
   const { searchValue, setSearchValue, showLogIn, showSignUp } = props;
