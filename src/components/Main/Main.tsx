@@ -1,15 +1,26 @@
-/* eslint-disable no-debugger */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from "../Header/Header";
 import TopSection from "../TopSection/TopSection";
 import Auth from "../Auth/Auth";
 import Footer from "../Footer/Footer";
-import React, { useState } from "react";
+import { IDispatch } from "../../interfaces/interfaces";
+import { fetchData } from "../../store/action-creators/booksData";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
+import { useDispatch } from "react-redux";
 
 const Main: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [isLogInShown, setIsLogInShown] = useState(false);
   const [isSignUpShown, setIsSignUpShown] = useState(false);
+  const dispatch = useDispatch<IDispatch<any>>();
+  const state = useTypedSelector((state) => state.data);
+  console.log(state);
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   return (
     <section className="main">
@@ -19,7 +30,7 @@ const Main: React.FC = () => {
         showLogIn={setIsLogInShown}
         showSignUp={setIsSignUpShown}
       />
-      <TopSection />
+      <TopSection showSignUp={setIsSignUpShown} />
       <CSSTransition
         in={isLogInShown}
         timeout={200}
@@ -30,6 +41,7 @@ const Main: React.FC = () => {
       >
         <Auth
           setShowAuth={setIsLogInShown}
+          data="Log in"
           variant="primary"
           dismissible
           title="Log In to Fox Library"

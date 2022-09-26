@@ -1,7 +1,11 @@
 import topImg from "../../assets/images/top-section/topImg.svg";
 import React from "react";
 
-const TopSection: React.FC = () => {
+interface IProps {
+  showSignUp: (value: boolean) => void;
+}
+
+const TopSection: React.FC<IProps> = ({ showSignUp }) => {
   return (
     <section className="top-section">
       <div className="content">
@@ -9,7 +13,9 @@ const TopSection: React.FC = () => {
         <p className="content__description">
           Over 400.000 books from fiction to the business literature
         </p>
-        <button className="content__button">Let&#8217;s start</button>
+        <button className="content__button" onClick={() => showSignUp(true)}>
+          Let&#8217;s start
+        </button>
       </div>
       <img className="top-section__image" src={topImg} alt="top-img" />
     </section>

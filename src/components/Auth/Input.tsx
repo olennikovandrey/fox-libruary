@@ -1,31 +1,79 @@
 import React, { ChangeEvent } from "react";
 
-interface IProps {
+type IProps = {
   value: string;
-  label: string;
   inputType: string;
-  stateFn: (value: string) => void;
-}
+  placeholder: string;
+  stateFn: (value: string) => void | undefined;
+  validFn: (
+    event: React.FormEvent<HTMLInputElement>,
+    inputValue: string,
+    stateValidFn: (value: boolean) => void,
+    stateErrorFn: (errorMessage: string) => void,
+    stateFn: (value: string) => void | undefined,
+    formValidChecker: () => void,
+  ) => void;
+  stateValidFn: (value: boolean) => void;
+  stateErrorFn: (errorMessage: string) => void;
+  formValidChecker: () => void;
+};
 
 const Input: React.FC<IProps> = (props) => {
-  const { label, value, inputType, stateFn } = props;
+  const {
+    value,
+    inputType,
+    placeholder,
+    stateFn,
+    validFn,
+    stateValidFn,
+    stateErrorFn,
+    formValidChecker,
+  } = props;
 
   return (
     <>
-      <label className="auth__label">
-        {label}
-        <input
-          className="auth__input"
-          value={value}
-          type={inputType}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            stateFn(event.target.value)
-          }
-        />
-        {value.length >= 1 && (
-          <span className="auth__clear-value" onClick={() => stateFn("")} />
-        )}
-      </label>
+      <input
+        className="auth__input"
+        value={value}
+        placeholder={placeholder}
+        type={inputType}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          stateFn(event.target.value)
+        }
+        onBlur={(event) =>
+          validFn(
+            event,
+            value,
+            stateValidFn,
+            stateErrorFn,
+            stateFn,
+            formValidChecker,
+          )
+        }
+        onInput={(event) =>
+          validFn(
+            event,
+            value,
+            stateValidFn,
+            stateErrorFn,
+            stateFn,
+            formValidChecker,
+          )
+        }
+        onKeyUp={(event) =>
+          validFn(
+            event,
+            value,
+            stateValidFn,
+            stateErrorFn,
+            stateFn,
+            formValidChecker,
+          )
+        }
+      />
+      {value.length >= 1 && (
+        <span className="auth__clear-value" onClick={() => stateFn("")} />
+      )}
     </>
   );
 };
