@@ -1,5 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from "../../assets/images/header/Fox_Library.svg";
+import HeaderMenu from "../HeaderMenu/HeaderMenu";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { IDispatch } from "../../interfaces/interfaces";
+import { showHeaderMenuAction } from "../../store/action-creators/actions";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 interface IProps {
   setSearchValue: (value: string) => void;
@@ -10,6 +16,10 @@ interface IProps {
 
 const Header: React.FC<IProps> = (props) => {
   const { searchValue, setSearchValue, showLogIn, showSignUp } = props;
+  const dispatch = useDispatch<IDispatch<any>>();
+  const state = useTypedSelector((state) => state.data);
+  const isUserAuthorized = state.isSignedUp;
+  const isHeaderMenuActive = state.isHeaderMenuVisible;
 
   return (
     <header className="header">
@@ -21,12 +31,24 @@ const Header: React.FC<IProps> = (props) => {
           onChange={(event) => setSearchValue(event.currentTarget.value)}
         />
       </div>
-      <nav className="header__nav" onClick={() => showLogIn(true)}>
-        Log in
-      </nav>
-      <nav className="header__nav" onClick={() => showSignUp(true)}>
-        Sign Up
-      </nav>
+      <div className="header__navs-wrapper">
+        {!isUserAuthorized && <nav onClick={() => showLogIn(true)}>Log in</nav>}
+        {!isUserAuthorized && (
+          <nav onClick={() => showSignUp(true)}>Sign Up</nav>
+        )}
+        {isUserAuthorized && <nav>All books</nav>}
+        {isUserAuthorized && <nav>Your orders</nav>}
+        {isUserAuthorized && (
+          <div
+            className="header__navs-user"
+            onClick={() => dispatch(showHeaderMenuAction())}
+          >
+            <nav></nav>
+            <span data-state={isHeaderMenuActive ? "active" : ""}></span>
+          </div>
+        )}
+      </div>
+      {isHeaderMenuActive && <HeaderMenu />}
     </header>
   );
 };

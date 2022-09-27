@@ -4,7 +4,7 @@ import TopSection from "../TopSection/TopSection";
 import Auth from "../Auth/Auth";
 import Footer from "../Footer/Footer";
 import { IDispatch } from "../../interfaces/interfaces";
-import { fetchData } from "../../store/action-creators/booksData";
+import { fetchDataAction } from "../../store/action-creators/actions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
@@ -19,7 +19,7 @@ const Main: React.FC = () => {
   console.log(state);
 
   useEffect(() => {
-    dispatch(fetchData());
+    dispatch(fetchDataAction());
   }, [dispatch]);
 
   return (

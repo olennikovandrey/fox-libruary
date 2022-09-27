@@ -11,11 +11,9 @@ type IProps = {
     stateValidFn: (value: boolean) => void,
     stateErrorFn: (errorMessage: string) => void,
     stateFn: (value: string) => void | undefined,
-    formValidChecker: () => void,
   ) => void;
   stateValidFn: (value: boolean) => void;
   stateErrorFn: (errorMessage: string) => void;
-  formValidChecker: () => void;
 };
 
 const Input: React.FC<IProps> = (props) => {
@@ -27,7 +25,6 @@ const Input: React.FC<IProps> = (props) => {
     validFn,
     stateValidFn,
     stateErrorFn,
-    formValidChecker,
   } = props;
 
   return (
@@ -41,34 +38,16 @@ const Input: React.FC<IProps> = (props) => {
           stateFn(event.target.value)
         }
         onBlur={(event) =>
-          validFn(
-            event,
-            value,
-            stateValidFn,
-            stateErrorFn,
-            stateFn,
-            formValidChecker,
-          )
+          validFn(event, value, stateValidFn, stateErrorFn, stateFn)
         }
         onInput={(event) =>
-          validFn(
-            event,
-            value,
-            stateValidFn,
-            stateErrorFn,
-            stateFn,
-            formValidChecker,
-          )
+          validFn(event, value, stateValidFn, stateErrorFn, stateFn)
         }
         onKeyUp={(event) =>
-          validFn(
-            event,
-            value,
-            stateValidFn,
-            stateErrorFn,
-            stateFn,
-            formValidChecker,
-          )
+          validFn(event, value, stateValidFn, stateErrorFn, stateFn)
+        }
+        onClick={(event) =>
+          validFn(event, value, stateValidFn, stateErrorFn, stateFn)
         }
       />
       {value.length >= 1 && (

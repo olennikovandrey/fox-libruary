@@ -1,5 +1,6 @@
 .header
   height: 52px
+  position: relative
   display: flex
   align-items: center
   background-color: #fff
@@ -12,7 +13,6 @@
     position: relative
     width: 40%
     height: 100%
-    margin-right: 25%
     &::before
       position: absolute
       display: block
@@ -37,12 +37,30 @@
     &:active
       border: 2px solid #fd2d1b
 
-  &__nav
-    width: 10%
-    font-size: 20px
-    font-weight: 700
-    text-align: right
+  &__navs-wrapper
+    width: 55%
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    & nav
+      width: 25%
+      font-size: 20px
+      font-weight: 700
+      text-align: right
+      cursor: pointer
+      transition: .2s
+      &:hover
+        color: #000
+
+  &__navs-user
+    display: flex
     cursor: pointer
-    transition: .2s
-    &:hover
-      color: #000
+    & nav
+      width: 36px
+      margin: 0 15px 0 30px
+      content: url("../../assets/images/header/user.svg")
+    & span
+      content: url("../../assets/images/header/arrow.svg")
+      transition: .3s
+      &[data-state="active"]
+        transform: rotate(180deg)

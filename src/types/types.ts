@@ -3,7 +3,10 @@ export enum DataActionTypes {
   FETCH_DATA_SUCCESS = "FETCH_DATA_SUCCESS",
   FETCH_DATA_ERROR = "FETCH_DATA_ERROR",
   REGISTER_USER = "REGISTER_USER",
-  EDIT_USER = "EDIT_USER"
+  EDIT_USER = "EDIT_USER",
+  LOG_OUT = "LOG_OUT",
+  SHOW_HEADER_MENU="SHOW_HEADER_MENU",
+  SIGN_UP="SIGN_UP"
 }
 
 export interface LoadedBooks {
@@ -17,9 +20,9 @@ export interface LoadedBooks {
 }
 
 export interface UserData {
-  username: string,
-  birthDate: string,
-  email: string,
+  userName: string,
+  birthDate?: string,
+  email?: string,
   password: string
 }
 
@@ -29,8 +32,10 @@ export interface DataState {
   error: null | string,
   loaded: boolean,
   isSignedUp: boolean,
-  isUserExists: boolean,
-  users: UserData[] | []
+  isUserExist: boolean,
+  isHeaderMenuVisible: boolean,
+  users: UserData[] | [],
+  currentUser: UserData | null
 }
 
 interface FetchDataAction {
@@ -59,4 +64,22 @@ interface EditUser {
   payload: UserData
 }
 
-export type DataAction = FetchDataAction | FetchDataSuccessAction | FetchDataErrorAction | RegisterUser | EditUser;
+interface LogOutAction {
+  type: DataActionTypes.LOG_OUT
+}
+
+interface ShowHeaderMenuAction {
+  type: DataActionTypes.SHOW_HEADER_MENU
+}
+
+interface SignUpAction {
+  type: DataActionTypes.SIGN_UP
+}
+
+export type DataAction =
+                          FetchDataAction |
+                          FetchDataSuccessAction |
+                          FetchDataErrorAction |
+                          RegisterUser |
+                          EditUser |
+                          LogOutAction | ShowHeaderMenuAction | SignUpAction;

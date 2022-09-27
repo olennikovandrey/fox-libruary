@@ -1,14 +1,16 @@
 /* eslint-disable no-case-declarations */
-import { DataAction, DataActionTypes, DataState } from "../../types/data";
+import { DataAction, DataActionTypes, DataState } from "../../types/types";
 
 const initialState: DataState = {
   booksData: [],
+  users: [],
   error: null,
   loading: false,
   loaded: false,
+  currentUser: null,
   isSignedUp: false,
-  isUserExists: false,
-  users: []
+  isUserExist: false,
+  isHeaderMenuVisible: false
 };
 
 export const dataReducer = (state = initialState, action: DataAction): DataState => {
@@ -38,22 +40,43 @@ export const dataReducer = (state = initialState, action: DataAction): DataState
 
   case DataActionTypes.REGISTER_USER:
     const newUsers = [...state.users];
-    const newUser = action.payload;
-    const existingUser = state.users.find(user => user.email === newUser.email || user.username === newUser.username);
+    const user = action.payload;
+    const existingUser = state.users.find(userData => userData.email === user.email || userData.userName === user.userName);
     newUsers.push(action.payload);
     localStorage.setItem("Fox libruary user", JSON.stringify(newUsers));
+
     if (existingUser) {
       return {
         ...state,
-        isUserExists: true
+        isUserExist: true,
+        currentUser: user
       };
     } else {
       return {
         ...state,
         users: newUsers,
-        isSignedUp: true
+        isSignedUp: true,
+        currentUser: user
       };
     }
+
+  case DataActionTypes.LOG_OUT:
+    return {
+      ...state,
+      isSignedUp: false
+    };
+
+  case DataActionTypes.SHOW_HEADER_MENU:
+    return {
+      ...state,
+      isHeaderMenuVisible: !state.isHeaderMenuVisible
+    };
+
+  case DataActionTypes.SIGN_UP:
+    return {
+      ...state,
+      isSignedUp: !state.isSignedUp
+    };
 
   default:
     return state;

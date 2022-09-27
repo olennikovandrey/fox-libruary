@@ -1,8 +1,8 @@
-import { DataActionTypes, DataAction, UserData } from "../../types/data";
+import { DataActionTypes, DataAction, UserData } from "../../types/types";
 import { Dispatch } from "react";
 import axios from "axios";
 
-export const fetchData = () => {
+export const fetchDataAction = () => {
   return async (dispatch: Dispatch<DataAction>): Promise<void> => {
     try {
       dispatch({ type: DataActionTypes.FETCH_DATA });
@@ -16,8 +16,26 @@ export const fetchData = () => {
   };
 };
 
-export const registerUser = (user: UserData) => {
+export const registerUserAction = (user: UserData) => {
   return (dispatch: Dispatch<DataAction>): void => {
     dispatch({ type: DataActionTypes.REGISTER_USER, payload: user });
+  };
+};
+
+export const signUpAction = () => {
+  return (dispatch: Dispatch<DataAction>): void => {
+    dispatch({ type: DataActionTypes.SIGN_UP});
+  };
+};
+
+export const logOutAction = () => {
+  return (dispatch: Dispatch<DataAction>): void => {
+    dispatch({ type: DataActionTypes.LOG_OUT});
+  };
+};
+
+export const showHeaderMenuAction = () => {
+  return (dispatch: Dispatch<DataAction>): void => {
+    dispatch({ type: DataActionTypes.SHOW_HEADER_MENU});
   };
 };

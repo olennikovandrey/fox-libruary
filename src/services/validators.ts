@@ -3,8 +3,7 @@ export const userValidator = (
   userName: string,
   stateValidFn: (value: boolean) => void,
   stateErrorFn: (value: string) => void,
-  stateFn: (inputValue: string) => void,
-  formValidChecker: () => void
+  stateFn: (inputValue: string) => void
 ): void => {
   const usersArr: string[] = userName.replace(/\s+/g, " ").split(" ");
   if (usersArr.length > 2) { usersArr.length = 2; }
@@ -35,7 +34,6 @@ export const userValidator = (
     stateErrorFn("");
     event.currentTarget.setAttribute("data-state", "valid");
   }
-  formValidChecker();
 };
 
 export const birthValidator = (
@@ -43,8 +41,7 @@ export const birthValidator = (
   birthDate: string,
   stateValidFn: (value: boolean) => void,
   stateErrorFn: (value: string) => void,
-  stateFn: (inputValue: string) => void | undefined,
-  formValidChecker: () => void
+  stateFn: (inputValue: string) => void | undefined
 ): void => {
   const date: Date = new Date(birthDate);
   const regexp = /[a-zа-яё]/i;
@@ -58,7 +55,6 @@ export const birthValidator = (
     stateErrorFn("");
     event.currentTarget.setAttribute("data-state", "valid");
   }
-  formValidChecker();
 };
 
 export const emailValidator = (
@@ -66,8 +62,7 @@ export const emailValidator = (
   emailValue: string,
   stateValidFn: (value: boolean) => void,
   stateErrorFn: (value: string) => void,
-  stateFn: (inputValue: string) => void | undefined,
-  formValidChecker: () => void
+  stateFn: (inputValue: string) => void | undefined
 ): void => {
   const email: string = emailValue;
   const regexp = /^([^.@]+)(\.[^.@]+)*@([a-z]+\.)+([a-z]+){2,4}$/;
@@ -86,7 +81,6 @@ export const emailValidator = (
     stateErrorFn("");
     event.currentTarget.setAttribute("data-state", "valid");
   }
-  formValidChecker();
 };
 
 export const passwordValidator = (
@@ -94,8 +88,7 @@ export const passwordValidator = (
   passwordValue: string,
   stateValidFn: (value: boolean) => void,
   stateErrorFn: (value: string) => void,
-  stateFn: (inputValue: string) => void | undefined,
-  formValidChecker: () => void
+  stateFn: (inputValue: string) => void | undefined
 ): void => {
   const password: string = passwordValue;
 
@@ -112,5 +105,4 @@ export const passwordValidator = (
     stateErrorFn("");
     event.currentTarget.setAttribute("data-state", "valid");
   }
-  formValidChecker();
 };

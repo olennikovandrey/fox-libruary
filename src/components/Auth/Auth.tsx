@@ -1,15 +1,19 @@
-/* eslint-disable no-debugger */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Input from "./Input";
 import { IDispatch } from "../../interfaces/interfaces";
-import { registerUser } from "../../store/action-creators/booksData";
-import { UserData } from "../../types/data";
+import {
+  registerUserAction,
+  signUpAction,
+} from "../../store/action-creators/actions";
+import { UserData } from "../../types/types";
 import {
   userValidator,
   birthValidator,
   emailValidator,
   passwordValidator,
 } from "../../services/validators";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { UserClass } from "../../classes/UserClass";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -23,7 +27,7 @@ interface IProps {
 
 const Auth: React.FC<IProps> = (props) => {
   const { setShowAuth, data, title } = props;
-  const [username, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,18 +40,37 @@ const Auth: React.FC<IProps> = (props) => {
   );
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isAuthValid, setIsAuthValid] = useState(false);
+  const [isUserWrong, setIsUserWrong] = useState(false);
   const [userNameError, setUserNameError] = useState("");
   const [birthError, setBirthError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const state = useTypedSelector((state) => state.data);
+
   const dispatch = useDispatch<IDispatch<any>>();
 
-  const user: UserData = {
-    username: username,
-    birthDate: birthDay,
-    email: email,
-    password: password,
+  const registerUserSubmit = () => {
+    const newUser: UserData = new UserClass(
+      userName,
+      birthDay,
+      email,
+      password,
+    );
+    dispatch(registerUserAction(newUser));
+    setShowAuth(false);
+  };
+
+  const logInSubmit = () => {
+    const isUserExists = state.users.find(
+      (user) => user.userName === userName && user.password === password,
+    );
+    if (isUserExists) {
+      dispatch(signUpAction());
+      setShowAuth(false);
+    } else {
+      setIsUserWrong(true);
+    }
   };
 
   useEffect(() => {
@@ -56,31 +79,42 @@ const Auth: React.FC<IProps> = (props) => {
         setShowAuth(false);
       }
     });
+    return document.addEventListener("click", (event) => {
+      if ((event.target as Element).classList.value.match("auth-wrapper")) {
+        setShowAuth(false);
+      }
+    });
   }, [setShowAuth]);
 
-  const formValidChecker = () => {
+  useEffect(() => {
     if (isUserNameValid && isBirthValid && isEmailValid && isPasswordValid) {
       setIsAuthValid(true);
+    } else {
+      setIsAuthValid(false);
     }
-  };
+  }, [isUserNameValid, isBirthValid, isEmailValid, isPasswordValid]);
 
   return (
     <div className="auth-wrapper">
       <form className="auth">
         <span className="auth__close" onClick={() => setShowAuth(false)}></span>
         <p className="auth__title">{title}</p>
+        {isUserWrong && (
+          <span className="auth__validation-error">
+            Wrong username or password
+          </span>
+        )}
         <label className="auth__label">
           Username{" "}
           <span className="auth__validation-error">{userNameError}</span>
           <Input
-            value={username}
+            value={userName}
             placeholder="2 latin words from 3 to 15 symbols"
             stateFn={setUserName}
             inputType="text"
             validFn={userValidator}
             stateValidFn={setIsUserNameValid}
             stateErrorFn={setUserNameError}
-            formValidChecker={formValidChecker}
           />
         </label>
         {data === "Sign Up" && (
@@ -95,7 +129,6 @@ const Auth: React.FC<IProps> = (props) => {
               validFn={birthValidator}
               stateValidFn={setIsBirthValid}
               stateErrorFn={setBirthError}
-              formValidChecker={formValidChecker}
             />
           </label>
         )}
@@ -110,7 +143,6 @@ const Auth: React.FC<IProps> = (props) => {
               validFn={emailValidator}
               stateValidFn={setIsEmailValid}
               stateErrorFn={setEmailError}
-              formValidChecker={formValidChecker}
             />
           </label>
         )}
@@ -125,13 +157,16 @@ const Auth: React.FC<IProps> = (props) => {
             validFn={passwordValidator}
             stateValidFn={setIsPasswordValid}
             stateErrorFn={setPasswordError}
-            formValidChecker={formValidChecker}
           />
         </label>
         <button
           className="auth__button"
           type="button"
-          onClick={() => dispatch(registerUser(user))}
+          onClick={
+            data === "Sign Up"
+              ? () => registerUserSubmit()
+              : () => logInSubmit()
+          }
           disabled={!isAuthValid}
         >
           {data}
